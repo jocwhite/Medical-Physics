@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABR Part 2 Study Dashboard</title>
+  <style>
+    :root {
+      --bg: #07110d;
+      --bg2: #0d1f18;
+      --card: rgba(255, 255, 255, 0.075);
+      --card2: rgba(255, 255, 255, 0.105);
+      --text: #eefcf5;
+      --muted: #b9d5c9;
+      --line: rgba(255, 255, 255, 0.14);
+      --green: #4ade80;
+      --green2: #22c55e;
+      --blue: #60a5fa;
+      --yellow: #fde68a;
+      --red: #fb7185;
+      --shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(34, 197, 94, 0.20), transparent 34%),
+        radial-gradient(circle at 90% 5%, rgba(96, 165, 250, 0.18), transparent 32%),
+        linear-gradient(180deg, var(--bg), #030806 70%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 17, 13, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      display: grid;
+      place-items: center;
+      color: #04100a;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 74px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .panel,
+    .topic-card,
+    .resource-card,
+    .question-card {
+      background: linear-gradient(180deg, var(--card2), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 42px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(74, 222, 128, 0.38), transparent 68%);
+      filter: blur(3px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 18px 0 16px;
+      max-width: 880px;
+      font-size: clamp(2.35rem, 6vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.075em;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.65;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 750;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+      transition: 0.2s ease;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #031108;
+      border-color: transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      height: 100%;
+    }
+
+    .stat {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      letter-spacing: -0.05em;
+      color: var(--green);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    section {
+      padding: 34px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      letter-spacing: -0.055em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 660px;
+      line-height: 1.55;
+    }
+
+    .search-box {
+      min-width: min(360px, 100%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .search-box input {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(185, 213, 201, 0.72);
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .topic-card {
+      padding: 22px;
+      transition: 0.2s ease;
+      position: relative;
+      min-height: 210px;
+      overflow: hidden;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(74, 222, 128, 0.5);
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: rgba(74, 222, 128, 0.13);
+      color: var(--green);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+    }
+
+    .topic-card h3,
+    .resource-card h3 {
+      margin: 16px 0 10px;
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .topic-card p,
+    .resource-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 18px;
+    }
+
+    .mini-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .mini-list span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .resource-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 185px;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .link-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--muted);
+    }
+
+    .link-row:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.075);
+    }
+
+    .link-row b {
+      color: var(--text);
+    }
+
+    .link-row small {
+      color: var(--green);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .questions {
+      display: grid;
+      gap: 12px;
+    }
+
+    details.question-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 18px 20px;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .answer {
+      padding: 0 20px 20px;
+      color: var(--muted);
+      line-height: 1.65;
+      border-top: 1px solid var(--line);
+    }
+
+    .answer strong {
+      color: var(--text);
+    }
+
+    .footer {
+      padding: 44px 0 70px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .topic-grid,
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .hero-card {
+        padding: 28px;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="#top" aria-label="ABR Part 2 home">
+        <span class="brand-mark">⚛</span>
+        <span>ABR Part 2</span>
+      </a>
+      <div class="nav-links">
+        <a href="#topics">Topics</a>
+        <a href="#tg-reports">TG Reports</a>
+        <a href="#pdfs">PDF Library</a>
+        <a href="#questions">Practice</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero shell">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span class="eyebrow">Medical Physics Study Hub</span>
+          <h1>ABR Part 2 Study Dashboard</h1>
+          <p class="lead">
+            A clean home base for TG reports, high-yield treatment machine notes, treatment planning summaries,
+            brachytherapy references, shielding rules, imaging review, and practice questions.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#topics">Start studying</a>
+            <a class="btn" href="#tg-reports">Open TG reports</a>
+            <a class="btn" href="#pdfs">View PDFs</a>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><strong>6</strong><span>major ABR Part 2 sections</span></div>
+          <div class="stat"><strong>TG</strong><span>AAPM report quick links</span></div>
+          <div class="stat"><strong>PDF</strong><span>your polished notes and question sets</span></div>
+          <div class="stat"><strong>Q/A</strong><span>collapsible practice review</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="topics" class="shell">
+      <div class="section-head">
+        <div>
+          <h2>High-Yield Topic Areas</h2>
+          <p>Use this like your ABR Part 2 command center. Each card can link to a note page, PDF, or question bank.</p>
+        </div>
+        <label class="search-box" aria-label="Search topics">
+          🔎
+          <input id="search" type="search" placeholder="Search: TG-51, DLG, HDR, shielding..." />
+        </label>
+      </div>
+
+      <div class="topic-grid searchable-area">
+        <article class="topic-card searchable" data-search="treatment machines linac ethos halcyon mlc tg142 picket fence starshot winston lutz output qa">
+          <span class="tag">Machines</span>
+          <h3>Treatment Machines</h3>
+          <p>Linac components, steering, MLC QA, TG-142 tolerances, imaging systems, output constancy, and mechanical checks.</p>
+          <div class="mini-list"><span>TG-142</span><span>MLC</span><span>Winston-Lutz</span></div>
+        </article>
+
+        <article class="topic-card searchable" data-search="treatment planning systems eclipse raystation aaa acuros xb dose calculation heterogeneity imrt vmat tg119 tg244">
+          <span class="tag">Planning</span>
+          <h3>Treatment Planning & TPS</h3>
+          <p>AAA vs Acuros, dose grid, heterogeneity, MU checks, IMRT/VMAT validation, DVH review, and commissioning logic.</p>
+          <div class="mini-list"><span>TG-119</span><span>TG-244</span><span>AAA/Acuros</span></div>
+        </article>
+
+        <article class="topic-card searchable" data-search="brachytherapy hdr tg43 source strength air kerma strength dwell time applicator leak test radiation safety">
+          <span class="tag">Brachy</span>
+          <h3>Brachytherapy</h3>
+          <p>TG-43 formalism, source calibration, HDR QA, applicator checks, treatment planning, and emergency procedures.</p>
+          <div class="mini-list"><span>TG-43</span><span>HDR</span><span>Source QA</span></div>
+        </article>
+
+        <article class="topic-card searchable" data-search="shielding safety regulations ncrp barrier workload use factor occupancy tenth value layer tvl hvl radiation protection">
+          <span class="tag">Safety</span>
+          <h3>Shielding, Safety & Regulations</h3>
+          <p>Primary and secondary barriers, leakage, scatter, TVL/HVL, workload, occupancy, controlled areas, and NRC/state rules.</p>
+          <div class="mini-list"><span>NCRP</span><span>TVL</span><span>Workload</span></div>
+        </article>
+
+        <article class="topic-card searchable" data-search="radiobiology alpha beta bed eqd2 repair repopulation reoxygenation redistribution tumor control normal tissue complication probability">
+          <span class="tag">Rad Bio</span>
+          <h3>Radiobiology</h3>
+          <p>BED/EQD2, fractionation, repair, repopulation, TCP/NTCP, OER, LET, RBE, and clinical radiobiology examples.</p>
+          <div class="mini-list"><span>BED</span><span>EQD2</span><span>4 Rs</span></div>
+        </article>
+
+        <article class="topic-card searchable" data-search="imaging ct sim cbct pet spect mri electron density ct number hounsfield tg66 tg126 tg204 tg220">
+          <span class="tag">Imaging</span>
+          <h3>Imaging & Simulation</h3>
+          <p>CT simulation QA, HU-to-density curves, CBCT, MRI fusion, PET/SPECT concepts, CTDI, and image-guidance checks.</p>
+          <div class="mini-list"><span>TG-66</span><span>TG-126</span><span>CTDI</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="tg-reports" class="shell">
+      <div class="section-head">
+        <div>
+          <h2>TG Report Quick Links</h2>
+          <p>Replace these placeholder links with direct PDFs, AAPM links, or your own summary pages.</p>
+        </div>
+      </div>
+
+      <div class="resource-grid searchable-area">
+        <article class="resource-card searchable" data-search="tg51 protocol reference dosimetry absorbed dose water ion chamber photon electron calibration">
+          <h3>TG-51 Reference Dosimetry</h3>
+          <p>Beam quality, kQ, Pion, Ppol, temperature-pressure, electrometer correction, and absolute calibration workflow.</p>
+          <div class="link-list">
+            <a class="link-row" href="pdfs/TG51-summary.pdf"><b>My TG-51 Summary</b><small>PDF</small></a>
+            <a class="link-row" href="notes/tg51.html"><b>TG-51 Study Notes</b><small>HTML</small></a>
+          </div>
+        </article>
+
+        <article class="resource-card searchable" data-search="tg142 linac quality assurance monthly annual daily output mlc imaging mechanical qa">
+          <h3>TG-142 Linac QA</h3>
+          <p>Daily/monthly/annual QA logic, output, mechanical, imaging, MLC tests, and risk-based interpretation.</p>
+          <div class="link-list">
+            <a class="link-row" href="pdfs/TG142-summary.pdf"><b>My TG-142 Summary</b><small>PDF</small></a>
+            <a class="link-row" href="notes/tg142.html"><b>TG-142 Study Notes</b><small>HTML</small></a>
+          </div>
+        </article>
+
+        <article class="resource-card searchable" data-search="tg43 brachytherapy dose calculation source strength air kerma strength geometry anisotropy radial dose">
+          <h3>TG-43 Brachytherapy</h3>
+          <p>Air-kerma strength, dose-rate constant, geometry factor, radial dose function, and anisotropy function.</p>
+          <div class="link-list">
+            <a class="link-row" href="pdfs/TG43-summary.pdf"><b>My TG-43 Summary</b><small>PDF</small></a>
+            <a class="link-row" href="notes/tg43.html"><b>TG-43 Study Notes</b><small>HTML</small></a>
+          </div>
+        </article>
+
+        <article class="resource-card searchable" data-search="tg100 risk analysis fmea fault tree analysis process map qa radiation oncology safety">
+          <h3>TG-100 Risk-Based QA</h3>
+          <p>Process mapping, FMEA, fault-tree analysis, severity, occurrence, detectability, and QA prioritization.</p>
+          <div class="link-list">
+            <a class="link-row" href="pdfs/TG100-summary.pdf"><b>My TG-100 Summary</b><small>PDF</small></a>
+            <a class="link-row" href="notes/tg100.html"><b>TG-100 Study Notes</b><small>HTML</small></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="pdfs" class="shell">
+      <div class="section-head">
+        <div>
+          <h2>PDF Library</h2>
+          <p>Drop your PDFs into a folder named <strong>pdfs</strong>, then update the links below.</p>
+        </div>
+      </div>
+      <div class="link-list searchable-area">
+        <a class="link-row searchable" data-search="treatment machines questions solutions" href="pdfs/ABR-Part2-Treatment-Machines-Questions.pdf"><b>Treatment Machines Questions</b><small>PDF</small></a>
+        <a class="link-row searchable" data-search="treatment planning systems questions solutions" href="pdfs/ABR-Part2-Treatment-Planning-Questions.pdf"><b>Treatment Planning Questions</b><small>PDF</small></a>
+        <a class="link-row searchable" data-search="brachytherapy radiobiology questions solutions" href="pdfs/ABR-Part2-Brachy-RadBio-Questions.pdf"><b>Brachytherapy & Radiobiology Questions</b><small>PDF</small></a>
+        <a class="link-row searchable" data-search="shielding safety regulations questions solutions" href="pdfs/ABR-Part2-Shielding-Safety-Questions.pdf"><b>Shielding, Safety & Regulations Questions</b><small>PDF</small></a>
+      </div>
+    </section>
+
+    <section id="questions" class="shell">
+      <div class="section-head">
+        <div>
+          <h2>Practice Questions</h2>
+          <p>Use collapsible questions for fast recall. Add more as you study.</p>
+        </div>
+      </div>
+
+      <div class="questions searchable-area">
+        <details class="question-card searchable" data-search="tg51 kq photon beam quality reference dosimetry">
+          <summary>Why does TG-51 use kQ?</summary>
+          <div class="answer">
+            <p><strong>Answer:</strong> kQ converts the chamber calibration coefficient from the calibration beam quality to the clinical beam quality. In practice, it accounts for chamber response changes with beam quality.</p>
+          </div>
+        </details>
+
+        <details class="question-card searchable" data-search="mlc picket fence leaf position qa tg142">
+          <summary>What does a picket fence test evaluate?</summary>
+          <div class="answer">
+            <p><strong>Answer:</strong> It checks MLC leaf positioning accuracy, usually by delivering narrow bands at multiple positions and looking for systematic or random leaf errors.</p>
+          </div>
+        </details>
+
+        <details class="question-card searchable" data-search="tvl shielding tenth value layer primary secondary barrier">
+          <summary>What is a TVL?</summary>
+          <div class="answer">
+            <p><strong>Answer:</strong> A tenth-value layer is the material thickness needed to reduce radiation intensity by a factor of 10. It is central to shielding calculations.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    Built as a static GitHub Pages study site. Replace placeholders with your own notes, PDFs, and links.
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("search");
+    const items = Array.from(document.querySelectorAll(".searchable"));
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      items.forEach((item) => {
+        const text = `${item.textContent} ${item.dataset.search || ""}`.toLowerCase();
+        item.classList.toggle("hidden", query && !text.includes(query));
+      });
+    });
+  </script>
+</body>
+</html>
