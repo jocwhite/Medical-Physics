@@ -7,10 +7,9 @@
   <style>
     :root {
       --bg: #06111f;
-      --bg2: #081a2e;
-      --nav: rgba(5, 15, 29, 0.86);
+      --nav: rgba(5, 15, 29, 0.88);
       --card: rgba(255, 255, 255, 0.075);
-      --card2: rgba(255, 255, 255, 0.115);
+      --card2: rgba(255, 255, 255, 0.12);
       --text: #eef7ff;
       --muted: #b7cce2;
       --line: rgba(255, 255, 255, 0.145);
@@ -18,8 +17,6 @@
       --blue2: #2563eb;
       --cyan: #67e8f9;
       --purple: #a78bfa;
-      --yellow: #fde68a;
-      --red: #fb7185;
       --shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
       --radius: 24px;
     }
@@ -40,7 +37,6 @@
     }
 
     a { color: inherit; text-decoration: none; }
-    strong { color: var(--text); }
 
     .shell {
       width: min(1180px, calc(100% - 32px));
@@ -106,16 +102,16 @@
       color: var(--text);
     }
 
-    .hero { padding: 74px 0 36px; }
+    .hero { padding: 76px 0 36px; }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.38fr 0.62fr;
+      grid-template-columns: 1.35fr 0.65fr;
       gap: 24px;
       align-items: stretch;
     }
 
-    .hero-card, .panel, .topic-card, .resource-card, .question-card, .study-block {
+    .hero-card, .quick-card, .page-card, .section-panel {
       background: linear-gradient(180deg, var(--card2), var(--card));
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -123,9 +119,9 @@
     }
 
     .hero-card {
-      padding: 42px;
-      overflow: hidden;
+      padding: 44px;
       position: relative;
+      overflow: hidden;
     }
 
     .hero-card::after {
@@ -141,8 +137,6 @@
 
     .eyebrow {
       display: inline-flex;
-      gap: 8px;
-      align-items: center;
       color: var(--cyan);
       font-weight: 800;
       font-size: 0.86rem;
@@ -188,28 +182,33 @@
 
     .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
 
-    .stats {
+    .quick-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
       height: 100%;
     }
 
-    .stat {
+    .quick-card {
       padding: 22px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.065);
+      transition: 0.2s ease;
     }
 
-    .stat strong {
+    .quick-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(103, 232, 249, 0.42);
+    }
+
+    .quick-card strong {
       display: block;
       font-size: 2rem;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.055em;
       color: var(--cyan);
+      margin-bottom: 8px;
     }
 
-    .stat span {
+    .quick-card span {
+      display: block;
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.35;
@@ -234,53 +233,34 @@
     .section-head p {
       margin: 8px 0 0;
       color: var(--muted);
-      max-width: 720px;
+      max-width: 760px;
       line-height: 1.55;
     }
 
-    .search-box {
-      min-width: min(390px, 100%);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.075);
-    }
-
-    .search-box input {
-      width: 100%;
-      background: transparent;
-      border: 0;
-      outline: 0;
-      color: var(--text);
-      font: inherit;
-    }
-
-    .search-box input::placeholder { color: rgba(183, 204, 226, 0.72); }
-
-    .topic-grid {
+    .page-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
-    .topic-card {
-      padding: 22px;
+    .page-card {
+      padding: 24px;
+      min-height: 250px;
       transition: 0.2s ease;
-      position: relative;
-      min-height: 215px;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .topic-card:hover, .resource-card:hover, .study-block:hover {
-      transform: translateY(-3px);
-      border-color: rgba(103, 232, 249, 0.48);
+    .page-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(103, 232, 249, 0.50);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
     }
 
     .tag {
       display: inline-flex;
+      width: fit-content;
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 0.78rem;
@@ -290,18 +270,17 @@
       border: 1px solid rgba(56, 189, 248, 0.25);
     }
 
-    .topic-card h3, .resource-card h3, .study-block h3 {
+    .page-card h3 {
       margin: 16px 0 10px;
-      font-size: 1.25rem;
-      letter-spacing: -0.03em;
+      font-size: 1.42rem;
+      letter-spacing: -0.04em;
     }
 
-    .topic-card p, .resource-card p, .study-block p, .study-block li {
+    .page-card p {
       color: var(--muted);
       line-height: 1.58;
+      margin: 0 0 18px;
     }
-
-    .topic-card p, .resource-card p, .study-block p { margin: 0 0 18px; }
 
     .mini-list {
       display: flex;
@@ -318,146 +297,24 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .resource-card {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 185px;
-      transition: 0.2s ease;
-    }
-
-    .link-list { display: grid; gap: 10px; }
-
-    .link-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.045);
-      color: var(--muted);
-      transition: 0.18s ease;
-    }
-
-    .link-row:hover {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(103, 232, 249, 0.36);
-    }
-
-    .link-row b { color: var(--text); }
-    .link-row small { color: var(--cyan); font-weight: 850; white-space: nowrap; }
-
-    .tab-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-    }
-
-    .tab-card {
-      padding: 20px;
-      min-height: 150px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.065);
-      transition: 0.2s ease;
-    }
-
-    .tab-card:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.095);
-      border-color: rgba(103, 232, 249, 0.40);
-    }
-
-    .tab-card strong {
-      display: block;
-      color: var(--cyan);
-      font-size: 1.7rem;
-      letter-spacing: -0.05em;
-      margin-bottom: 6px;
-    }
-
-    .tab-card span {
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    .study-grid {
-      display: grid;
-      grid-template-columns: 0.82fr 1.18fr;
-      gap: 16px;
-    }
-
-    .study-block {
-      padding: 22px;
-      transition: 0.2s ease;
-    }
-
-    .study-block ul {
-      margin: 0;
-      padding-left: 1.15rem;
-    }
-
-    .algorithm-table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 16px;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    .algorithm-table th, .algorithm-table td {
-      padding: 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .algorithm-table th {
-      color: var(--text);
-      background: rgba(56, 189, 248, 0.12);
-    }
-
-    .algorithm-table tr:last-child td { border-bottom: 0; }
-
-    details.question-card {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    summary {
-      cursor: pointer;
-      padding: 18px 20px;
-      font-weight: 850;
-      list-style: none;
-    }
-
-    summary::-webkit-details-marker { display: none; }
-
-    .answer {
-      padding: 0 20px 20px;
+    .section-panel {
+      padding: 24px;
       color: var(--muted);
       line-height: 1.65;
-      border-top: 1px solid var(--line);
     }
 
-    .callout {
-      border: 1px solid rgba(103, 232, 249, 0.34);
-      background: rgba(56, 189, 248, 0.105);
+    .folder-code {
+      margin: 16px 0 0;
+      padding: 18px;
       border-radius: 18px;
-      padding: 16px;
-      color: var(--muted);
-      line-height: 1.55;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.24);
+      color: #dcecff;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      white-space: pre;
     }
 
     .footer {
@@ -466,10 +323,8 @@
       text-align: center;
     }
 
-    .hidden { display: none !important; }
-
     @media (max-width: 1000px) {
-      .hero-grid, .topic-grid, .resource-grid, .study-grid, .tab-grid { grid-template-columns: 1fr; }
+      .hero-grid, .page-grid { grid-template-columns: 1fr; }
       .section-head { align-items: stretch; flex-direction: column; }
       .hero-card { padding: 28px; }
       .nav-inner { align-items: flex-start; flex-direction: column; }
@@ -480,358 +335,148 @@
 <body>
   <nav class="nav">
     <div class="shell nav-inner">
-      <a class="brand" href="#top" aria-label="Medical Physics home">
+      <a class="brand" href="index.html" aria-label="Medical Physics home">
         <span class="brand-mark">MP</span>
         <span>Medical Physics Hub</span>
       </a>
       <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#abr">ABR</a>
-        <a href="#residency">Residency Project</a>
-        <a href="#study-guide">Study Guide</a>
-        <a href="#topics">Topics</a>
-        <a href="#questions">Practice</a>
+        <a href="index.html">Home</a>
+        <a href="abr/index.html">ABR</a>
+        <a href="residency-project/index.html">Residency Project</a>
+        <a href="study-guides/index.html">Study Guides</a>
+        <a href="resources/index.html">Resources</a>
       </div>
     </div>
   </nav>
 
-  <main id="top">
-    <header id="home" class="hero shell">
+  <main>
+    <header class="hero shell">
       <div class="hero-grid">
         <div class="hero-card">
           <span class="eyebrow">Clinical Medical Physics Portfolio</span>
-          <h1>Medical Physics Study & Project Hub</h1>
+          <h1>Medical Physics Hub</h1>
           <p class="lead">
-            A central home for radiation therapy physics notes, ABR preparation, residency projects,
-            TPS commissioning work, QA references, diagrams, oral-board questions, and polished study guides.
+            A clean home base for radiation therapy physics, ABR prep, residency projects, study guides,
+            QA references, and uploaded PDF collections. Each top tab opens a separate page.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="#abr">Open ABR tabs</a>
-            <a class="btn" href="#study-guide">View TPS Study Guide</a>
-            <a class="btn" href="#residency">Residency Project</a>
+            <a class="btn primary" href="abr/index.html">Open ABR Page</a>
+            <a class="btn" href="residency-project/index.html">Residency Project</a>
+            <a class="btn" href="study-guides/index.html">Study Guides</a>
           </div>
         </div>
 
-        <div class="stats">
-          <div class="stat"><strong>ABR</strong><span>Part 1, Part 2, and Part 3 organization</span></div>
-          <div class="stat"><strong>TPS</strong><span>commissioning, algorithms, validation, and QA</span></div>
-          <div class="stat"><strong>QA</strong><span>linac, imaging, brachy, shielding, and safety</span></div>
-          <div class="stat"><strong>Projects</strong><span>residency work, scripts, reports, and presentations</span></div>
+        <div class="quick-grid">
+          <a class="quick-card" href="abr/index.html"><strong>ABR</strong><span>Part 1, Part 2, Part 3 PDFs and notes</span></a>
+          <a class="quick-card" href="residency-project/index.html"><strong>RP</strong><span>Residency projects, scripts, and reports</span></a>
+          <a class="quick-card" href="study-guides/index.html"><strong>SG</strong><span>Study guides, oral packets, and summaries</span></a>
+          <a class="quick-card" href="resources/index.html"><strong>QA</strong><span>Reference links, TG reports, and tools</span></a>
         </div>
       </div>
     </header>
 
-    <section id="abr" class="shell">
+    <section class="shell">
       <div class="section-head">
         <div>
-          <h2>ABR Study Tabs</h2>
-          <p>Use these like the main navigation tabs for your exam prep. Later, each card can become its own full webpage.</p>
+          <h2>Main Pages</h2>
+          <p>These are separate pages. Create the matching folders in GitHub and upload PDFs into each folder.</p>
         </div>
       </div>
 
-      <div class="tab-grid searchable-area">
-        <a class="tab-card searchable" data-search="abr part 1 general physics anatomy math radiation physics imaging nuclear medicine" href="#abr1">
-          <strong>ABR 1</strong>
-          <span>General physics, anatomy, imaging, nuclear medicine, radiation basics, and core calculations.</span>
-        </a>
-        <a class="tab-card searchable" data-search="abr part 2 therapy medical physics treatment machines planning brachy shielding radiobiology" href="#abr2">
-          <strong>ABR 2</strong>
-          <span>Therapy physics oral/written review: machines, planning, brachy, imaging, shielding, and rad bio.</span>
-        </a>
-        <a class="tab-card searchable" data-search="abr part 3 oral boards clinical scenarios troubleshooting safety patient specific qa" href="#abr3">
-          <strong>ABR 3</strong>
-          <span>Oral-board style answers, clinical judgment, troubleshooting, safety calls, and scenario practice.</span>
-        </a>
-        <a class="tab-card searchable" data-search="residency project commissioning raystation scripting ethos halcyon qa validation" href="#residency">
-          <strong>Project</strong>
-          <span>Residency work, commissioning summaries, scripts, QA projects, and presentations.</span>
-        </a>
-        <a class="tab-card searchable" data-search="study guide tps commissioning dose calculation algorithms beam model validation oral exam" href="#study-guide">
-          <strong>Guides</strong>
-          <span>HTML versions of your study packets so you do not have to upload PDFs.</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="residency" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>Residency Project Dashboard</h2>
-          <p>A clean place to present your clinical work, scripts, commissioning summaries, QA tools, and poster-style project pages.</p>
-        </div>
-      </div>
-
-      <div class="resource-grid searchable-area">
-        <article class="resource-card searchable" data-search="ethos halcyon commissioning qa mlc mpc imaging output raystation eclipse acuros aaa">
-          <h3>Ethos / Halcyon Commissioning</h3>
-          <p>Machine data, water tank notes, MPC/QA workflows, imaging checks, 6FFF beam model notes, and validation results.</p>
-          <div class="mini-list"><span>6FFF</span><span>MPC</span><span>MLC QA</span></div>
-        </article>
-        <article class="resource-card searchable" data-search="raystation scripting python roi disconnected islands contour centroid automation pdf reporting">
-          <h3>RayStation Scripting</h3>
-          <p>Clinical automation scripts, ROI checks, disconnected-volume detection, plan review tools, and PDF reporting workflows.</p>
-          <div class="mini-list"><span>IronPython</span><span>ROI QA</span><span>Plan Review</span></div>
-        </article>
-        <article class="resource-card searchable" data-search="tps validation tg119 tg244 clearcalc eclipse dosecheck radcalc mu check aaa acuros">
-          <h3>TPS / Second-Check Validation</h3>
-          <p>ClearCalc, Eclipse, AAA/Acuros comparisons, TG-119/TG-244 plan sets, MU differences, and validation documentation.</p>
-          <div class="mini-list"><span>TG-119</span><span>TG-244</span><span>MU Checks</span></div>
-        </article>
-        <article class="resource-card searchable" data-search="presentations theranostics reflexion bgrt prostate hypofractionation clinical medical physics">
-          <h3>Presentations & Teaching</h3>
-          <p>Theranostics, RefleXion/BgRT, prostate planning, clinical teaching slides, and polished visual explanations.</p>
-          <div class="mini-list"><span>Slides</span><span>Teaching</span><span>Clinical</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="study-guide" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>Study Guide: TPS Commissioning</h2>
-          <p>This is the kind of page you can build from your PDFs: readable HTML, searchable, mobile-friendly, and easy to update.</p>
-        </div>
-        <label class="search-box" aria-label="Search site">
-          🔎
-          <input id="search" type="search" placeholder="Search: TG-51, DLG, HDR, Acuros, shielding..." />
-        </label>
-      </div>
-
-      <div class="study-grid searchable-area">
-        <article class="study-block searchable" data-search="tps commissioning definition workflow acceptance testing beam data modeling validation clinical release">
-          <span class="tag">Oral Exam Answer</span>
-          <h3>What is TPS commissioning?</h3>
-          <p>
-            TPS commissioning is the process of configuring, modeling, validating, and clinically verifying a treatment planning system using measured machine data before patient treatments are performed.
-          </p>
-          <div class="callout">
-            <strong>Goal:</strong> Make sure the TPS accurately models beam output, PDDs, profiles, heterogeneity effects, MLC behavior, and dose delivery under realistic clinical conditions.
+      <div class="page-grid">
+        <a class="page-card" href="abr/index.html">
+          <div>
+            <span class="tag">Exam Prep</span>
+            <h3>ABR</h3>
+            <p>Organize ABR Part 1, Part 2, and Part 3 materials, including practice PDFs, formula sheets, topic summaries, and oral-board notes.</p>
           </div>
-        </article>
+          <div class="mini-list"><span>ABR 1</span><span>ABR 2</span><span>ABR 3</span></div>
+        </a>
 
-        <article class="study-block searchable" data-search="workflow acceptance testing beam data acquisition processing import beam model parameter tuning open field validation heterogeneity imrt vmat end to end clinical release">
-          <span class="tag">Workflow</span>
-          <h3>Typical TPS Commissioning Workflow</h3>
-          <ul>
-            <li>Acceptance testing</li>
-            <li>Beam data acquisition and processing</li>
-            <li>Import measured data into the TPS</li>
-            <li>Generate and tune the beam model</li>
-            <li>Validate open fields, heterogeneity, small fields, IMRT, and VMAT</li>
-            <li>Complete end-to-end testing and clinical release</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="study-block searchable" data-search="dose calculation algorithms pencil beam collapsed cone aaa acuros xb monte carlo heterogeneity lung lateral electron transport lbte">
-        <span class="tag">Dose Algorithms</span>
-        <h3>Algorithm Comparison</h3>
-        <table class="algorithm-table">
-          <thead>
-            <tr>
-              <th>Algorithm</th>
-              <th>Core Idea</th>
-              <th>Strength</th>
-              <th>Weakness / Oral Trap</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Pencil Beam</strong></td>
-              <td>Summes narrow beamlets with simple density scaling.</td>
-              <td>Very fast.</td>
-              <td>Poor in lung, interfaces, small fields, and lateral electron disequilibrium.</td>
-            </tr>
-            <tr>
-              <td><strong>Collapsed Cone</strong></td>
-              <td>Convolution/superposition with energy transported along discrete cones.</td>
-              <td>Good balance of speed and accuracy.</td>
-              <td>Still approximate transport.</td>
-            </tr>
-            <tr>
-              <td><strong>AAA</strong></td>
-              <td>Anisotropic convolution-superposition with primary, extra-focal, and electron contamination sources.</td>
-              <td>Fast and clinically useful.</td>
-              <td>Can struggle in very small lung fields and severe disequilibrium.</td>
-            </tr>
-            <tr>
-              <td><strong>Acuros XB</strong></td>
-              <td>Deterministically solves the Linear Boltzmann Transport Equation.</td>
-              <td>Excellent heterogeneity handling.</td>
-              <td>Slower than simpler algorithms.</td>
-            </tr>
-            <tr>
-              <td><strong>Monte Carlo</strong></td>
-              <td>Statistically simulates individual particle histories.</td>
-              <td>Gold-standard transport physics.</td>
-              <td>Statistical noise and longer computation time.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="resource-grid searchable-area">
-        <article class="study-block searchable" data-search="dose to water dose to medium stopping power ratio bone high z heterogeneity interfaces acuros">
-          <span class="tag">High-Yield Concept</span>
-          <h3>Dose-to-Water vs Dose-to-Medium</h3>
-          <p>
-            <strong>Dose-to-medium</strong> is energy deposited in the actual physical medium. <strong>Dose-to-water</strong> converts that result into an equivalent water dose using stopping-power ratios.
-          </p>
-          <div class="callout">Differences matter most in bone, high-Z materials, and heterogeneous interfaces.</div>
-        </article>
-
-        <article class="study-block searchable" data-search="beam modeling source size energy spectrum flattening filter extra focal electron contamination mlc transmission dlg tongue groove penumbra">
-          <span class="tag">Beam Modeling</span>
-          <h3>Beam Model Parameters</h3>
-          <ul>
-            <li>Primary source size and energy spectrum</li>
-            <li>Flattening filter or FFF modeling</li>
-            <li>Extra-focal radiation and electron contamination</li>
-            <li>MLC transmission, DLG, and tongue-and-groove effects</li>
-            <li>Jaw geometry and penumbra modeling</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="study-block searchable" data-search="validation independent commissioning point dose pdd profiles heterogeneity testing small fields imrt qa vmat qa ct density table optimization tg53 mppg5a tg244">
-        <span class="tag">Validation</span>
-        <h3>Final High-Yield Checklist</h3>
-        <p>You should be able to explain:</p>
-        <ul>
-          <li>How PB, CCC, AAA, Acuros, and Monte Carlo work</li>
-          <li>How heterogeneity is handled and why lung is difficult</li>
-          <li>Dose-to-water vs dose-to-medium</li>
-          <li>How beam models are created and tuned</li>
-          <li>What DLG represents clinically</li>
-          <li>How to troubleshoot beam-model discrepancies</li>
-          <li>Why validation must be independent from commissioning data</li>
-          <li>IMRT vs VMAT commissioning concerns</li>
-        </ul>
-        <div class="callout"><strong>Oral-board sentence:</strong> A TPS is only as accurate as its beam model, commissioning measurements, and validation methodology.</div>
-      </div>
-    </section>
-
-    <section id="topics" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>General Medical Physics Topics</h2>
-          <p>Use this section as the main content library. Each card can become a webpage instead of a PDF upload.</p>
-        </div>
-      </div>
-
-      <div class="topic-grid searchable-area">
-        <article id="abr2" class="topic-card searchable" data-search="treatment machines linac ethos halcyon mlc tg142 picket fence starshot winston lutz output qa">
-          <span class="tag">Therapy</span>
-          <h3>Treatment Machines</h3>
-          <p>Linac design, beam generation, MLCs, steering, TG-142, output constancy, imaging, and mechanical QA.</p>
-          <div class="mini-list"><span>TG-142</span><span>MLC</span><span>WL</span></div>
-        </article>
-
-        <article class="topic-card searchable" data-search="treatment planning systems eclipse raystation aaa acuros dose calculation heterogeneity imrt vmat tg119 tg244">
-          <span class="tag">TPS</span>
-          <h3>Treatment Planning</h3>
-          <p>AAA vs Acuros, dose grid, heterogeneity, MU checks, IMRT/VMAT validation, DVH review, and commissioning.</p>
-          <div class="mini-list"><span>Acuros</span><span>AAA</span><span>DLG</span></div>
-        </article>
-
-        <article class="topic-card searchable" data-search="brachytherapy hdr tg43 source strength air kerma strength dwell time applicator leak test radiation safety">
-          <span class="tag">Brachy</span>
-          <h3>Brachytherapy</h3>
-          <p>TG-43 formalism, source calibration, HDR QA, applicators, treatment planning, and emergency procedures.</p>
-          <div class="mini-list"><span>TG-43</span><span>HDR</span><span>QA</span></div>
-        </article>
-
-        <article class="topic-card searchable" data-search="shielding safety regulations ncrp barrier workload use factor occupancy tvl hvl radiation protection">
-          <span class="tag">Safety</span>
-          <h3>Shielding & Regulations</h3>
-          <p>Primary barriers, secondary barriers, leakage, scatter, TVL/HVL, workload, occupancy, and radiation rules.</p>
-          <div class="mini-list"><span>NCRP</span><span>TVL</span><span>HVL</span></div>
-        </article>
-
-        <article class="topic-card searchable" data-search="radiobiology alpha beta bed eqd2 repair repopulation reoxygenation redistribution tcp ntcp oer let rbe">
-          <span class="tag">Rad Bio</span>
-          <h3>Radiobiology</h3>
-          <p>BED/EQD2, fractionation, repair, repopulation, TCP/NTCP, OER, LET, RBE, and clinical examples.</p>
-          <div class="mini-list"><span>BED</span><span>EQD2</span><span>4 Rs</span></div>
-        </article>
-
-        <article class="topic-card searchable" data-search="imaging ct sim cbct pet spect mri electron density ct number hounsfield tg66 tg126 ct qa">
-          <span class="tag">Imaging</span>
-          <h3>Imaging & Simulation</h3>
-          <p>CT sim QA, HU-density curves, CBCT, MRI fusion, PET/SPECT concepts, CTDI, and image guidance.</p>
-          <div class="mini-list"><span>TG-66</span><span>CBCT</span><span>CTDI</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="abr1" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>ABR Part 1 Placeholder</h2>
-          <p>Add general physics, anatomy, imaging, nuclear medicine, statistics, and core calculation pages here.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="abr3" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>ABR Part 3 Placeholder</h2>
-          <p>Add oral-board cases, troubleshooting prompts, mock examiner questions, and clinical scenario answers here.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="questions" class="shell">
-      <div class="section-head">
-        <div>
-          <h2>Practice Questions</h2>
-          <p>Collapsible oral-board questions for fast recall.</p>
-        </div>
-      </div>
-
-      <div class="questions searchable-area">
-        <details class="question-card searchable" data-search="acuros monte carlo lbte deterministic statistical particle histories">
-          <summary>How is Acuros different from Monte Carlo?</summary>
-          <div class="answer">
-            <p><strong>Answer:</strong> Monte Carlo statistically simulates individual particle histories using random sampling. Acuros deterministically solves transport equations on a spatial grid.</p>
+        <a class="page-card" href="residency-project/index.html">
+          <div>
+            <span class="tag">Portfolio</span>
+            <h3>Residency Project</h3>
+            <p>Upload project reports, commissioning summaries, posters, presentations, scripts, QA tools, and clinical documentation examples.</p>
           </div>
-        </details>
+          <div class="mini-list"><span>Projects</span><span>Scripts</span><span>Reports</span></div>
+        </a>
 
-        <details class="question-card searchable" data-search="pencil beam lung heterogeneity lateral electron disequilibrium">
-          <summary>Why do pencil beam algorithms fail in lung?</summary>
-          <div class="answer">
-            <p><strong>Answer:</strong> They mainly use radiological-depth scaling and do not accurately model lateral electron transport. In lung, longer electron ranges can produce disequilibrium that pencil beam algorithms cannot handle well.</p>
+        <a class="page-card" href="study-guides/index.html">
+          <div>
+            <span class="tag">Study Library</span>
+            <h3>Study Guides</h3>
+            <p>Upload polished study guides as PDFs: TPS commissioning, TG-51, TG-142, treatment machines, treatment planning, and shielding.</p>
           </div>
-        </details>
+          <div class="mini-list"><span>PDFs</span><span>Notes</span><span>Packets</span></div>
+        </a>
 
-        <details class="question-card searchable" data-search="ct density table hounsfield units electron density mass density kvp protocols phantom inserts">
-          <summary>How do you generate a CT-density table?</summary>
-          <div class="answer">
-            <p><strong>Answer:</strong> Scan a CT-density phantom with known inserts, measure HU values, and map those HU values to electron or mass density for TPS dose calculation. Different protocols or kVp settings may need separate curves.</p>
+        <a class="page-card" href="resources/index.html">
+          <div>
+            <span class="tag">References</span>
+            <h3>Resources</h3>
+            <p>Keep useful links, TG report references, calculators, templates, tables, equations, and external medical physics resources.</p>
           </div>
-        </details>
+          <div class="mini-list"><span>TG Reports</span><span>Links</span><span>Tables</span></div>
+        </a>
+
+        <a class="page-card" href="abr/part-2/index.html">
+          <div>
+            <span class="tag">High Yield</span>
+            <h3>ABR Part 2</h3>
+            <p>A dedicated page for Part 2 therapy physics: treatment machines, TPS, brachytherapy, shielding, imaging, and radiobiology PDFs.</p>
+          </div>
+          <div class="mini-list"><span>Therapy</span><span>QA</span><span>Orals</span></div>
+        </a>
+
+        <a class="page-card" href="about/index.html">
+          <div>
+            <span class="tag">Profile</span>
+            <h3>About / CV</h3>
+            <p>Optional page for professional background, clinical interests, residency timeline, presentations, and selected work.</p>
+          </div>
+          <div class="mini-list"><span>CV</span><span>Bio</span><span>Work</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-head">
+        <div>
+          <h2>GitHub Folder Structure</h2>
+          <p>Create these folders/files so every tab opens a real page and each page can hold uploaded PDFs.</p>
+        </div>
+      </div>
+
+      <div class="section-panel">
+        <strong>Recommended structure:</strong>
+        <div class="folder-code">Medical-Physics/
+├── index.html
+├── abr/
+│   ├── index.html
+│   ├── part-1/
+│   │   └── index.html
+│   ├── part-2/
+│   │   └── index.html
+│   ├── part-3/
+│   │   └── index.html
+│   └── pdfs/
+├── residency-project/
+│   ├── index.html
+│   └── pdfs/
+├── study-guides/
+│   ├── index.html
+│   └── pdfs/
+├── resources/
+│   └── index.html
+└── about/
+    └── index.html</div>
       </div>
     </section>
   </main>
 
   <footer class="footer shell">
-    Built as a blue static GitHub Pages medical physics portfolio and study hub.
+    Medical Physics Hub • Static GitHub Pages website • Upload PDFs into each section folder
   </footer>
-
-  <script>
-    const searchInput = document.getElementById("search");
-    const items = Array.from(document.querySelectorAll(".searchable"));
-
-    if (searchInput) {
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim().toLowerCase();
-        items.forEach((item) => {
-          const text = `${item.textContent} ${item.dataset.search || ""}`.toLowerCase();
-          item.classList.toggle("hidden", query && !text.includes(query));
-        });
-      });
-    }
-  </script>
 </body>
 </html>
