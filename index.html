@@ -111,7 +111,7 @@
       align-items: stretch;
     }
 
-    .hero-card, .quick-card, .page-card, .section-panel {
+    .hero-card, .quick-card, .page-card {
       background: linear-gradient(180deg, var(--card2), var(--card));
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -297,26 +297,6 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
-    .section-panel {
-      padding: 24px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .folder-code {
-      margin: 16px 0 0;
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(0, 0, 0, 0.24);
-      color: #dcecff;
-      overflow-x: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.92rem;
-      line-height: 1.5;
-      white-space: pre;
-    }
-
     .footer {
       padding: 44px 0 70px;
       color: var(--muted);
@@ -379,7 +359,7 @@
       <div class="section-head">
         <div>
           <h2>Main Pages</h2>
-          <p>These are separate pages. Create the matching folders in GitHub and upload PDFs into each folder.</p>
+          <p>Each card opens a clean section page for PDFs, notes, projects, references, and ABR material.</p>
         </div>
       </div>
 
@@ -440,43 +420,10 @@
       </div>
     </section>
 
-    <section class="shell">
-      <div class="section-head">
-        <div>
-          <h2>GitHub Folder Structure</h2>
-          <p>Create these folders/files so every tab opens a real page and each page can hold uploaded PDFs.</p>
-        </div>
-      </div>
-
-      <div class="section-panel">
-        <strong>Recommended structure:</strong>
-        <div class="folder-code">Medical-Physics/
-├── index.html
-├── abr/
-│   ├── index.html
-│   ├── part-1/
-│   │   └── index.html
-│   ├── part-2/
-│   │   └── index.html
-│   ├── part-3/
-│   │   └── index.html
-│   └── pdfs/
-├── residency-project/
-│   ├── index.html
-│   └── pdfs/
-├── study-guides/
-│   ├── index.html
-│   └── pdfs/
-├── resources/
-│   └── index.html
-└── about/
-    └── index.html</div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer shell">
-    Medical Physics Hub • Static GitHub Pages website • Upload PDFs into each section folder
+    Medical Physics Hub • Radiation Therapy Physics • ABR Prep • Clinical QA
   </footer>
 </body>
 </html>
