@@ -15,6 +15,8 @@
       --line: rgba(255, 255, 255, 0.16);
       --cyan: #67e8f9;
       --blue: #2563eb;
+      --green: #34d399;
+      --amber: #fbbf24;
       --shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
     }
 
@@ -161,30 +163,70 @@
       margin: 0 0 20px;
       color: var(--muted);
       line-height: 1.55;
+      max-width: 760px;
     }
 
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .guide-card {
-      padding: 24px;
-      min-height: 245px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-radius: 24px;
+    .library-panel {
+      border-radius: 28px;
       border: 1px solid var(--line);
       background: linear-gradient(180deg, var(--card2), var(--card));
       box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .guide-list {
+      display: grid;
+    }
+
+    .guide-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
       transition: 0.2s ease;
     }
 
-    .guide-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(103, 232, 249, 0.5);
+    .guide-item:last-child {
+      border-bottom: 0;
+    }
+
+    .guide-item:hover {
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .guide-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #031126;
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      box-shadow: 0 12px 32px rgba(56, 189, 248, 0.22);
+    }
+
+    .guide-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .guide-item h3 {
+      margin: 0;
+      font-size: 1.28rem;
+      letter-spacing: -0.035em;
+    }
+
+    .guide-item p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
     }
 
     .tag {
@@ -192,40 +234,44 @@
       width: fit-content;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 850;
       background: rgba(56, 189, 248, 0.14);
       color: var(--cyan);
       border: 1px solid rgba(56, 189, 248, 0.25);
     }
 
-    .guide-card h3 {
-      margin: 16px 0 10px;
-      font-size: 1.42rem;
-      letter-spacing: -0.04em;
+    .tag.ready {
+      background: rgba(52, 211, 153, 0.13);
+      color: var(--green);
+      border-color: rgba(52, 211, 153, 0.26);
     }
 
-    .guide-card p {
-      color: var(--muted);
-      line-height: 1.58;
-      margin: 0 0 18px;
+    .tag.soon {
+      background: rgba(251, 191, 36, 0.11);
+      color: var(--amber);
+      border-color: rgba(251, 191, 36, 0.23);
     }
 
     .btn-row {
       display: flex;
       flex-wrap: wrap;
+      justify-content: flex-end;
       gap: 10px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+      min-width: 102px;
       padding: 11px 14px;
       border-radius: 999px;
-      font-weight: 800;
+      font-weight: 850;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.075);
       transition: 0.2s ease;
+      white-space: nowrap;
     }
 
     .btn.primary {
@@ -234,27 +280,24 @@
       border-color: transparent;
     }
 
+    .btn.disabled {
+      color: rgba(238, 247, 255, 0.45);
+      pointer-events: none;
+      cursor: not-allowed;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     .btn:hover {
       transform: translateY(-2px);
       filter: brightness(1.08);
     }
 
-    .note-card {
-      padding: 24px;
-      border-radius: 24px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.07);
+    .library-footer {
+      padding: 18px 22px;
       color: var(--muted);
-      line-height: 1.6;
-    }
-
-    code {
-      display: inline-block;
-      padding: 5px 8px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: rgba(0, 0, 0, 0.25);
-      color: #dcecff;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.16);
     }
 
     footer {
@@ -263,9 +306,18 @@
       text-align: center;
     }
 
-    @media (max-width: 900px) {
-      .guide-grid {
+    @media (max-width: 800px) {
+      .guide-item {
         grid-template-columns: 1fr;
+      }
+
+      .guide-icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .btn-row {
+        justify-content: flex-start;
       }
 
       .hero-card {
@@ -304,83 +356,94 @@
         <span class="eyebrow">PDF Study Library</span>
         <h1>Study Guides</h1>
         <p class="lead">
-          A collection of polished medical physics study guides, oral-board packets,
+          A clean library for polished medical physics study guides, oral-board packets,
           commissioning notes, and high-yield review documents.
         </p>
       </div>
     </header>
 
     <section class="shell">
-      <h2>Available PDFs</h2>
+      <h2>Available Study Guides</h2>
       <p class="section-subtitle">
-        Click a guide to open it in the browser. Add more PDFs to this folder and duplicate one of the cards below.
+        Open a guide in the browser or download a local copy. Add future PDFs to this page as new list items.
       </p>
 
-      <div class="guide-grid">
-        <article class="guide-card">
-          <div>
-            <span class="tag">TPS Commissioning</span>
-            <h3>TPS Study Guide</h3>
-            <p>
-              Oral-exam style packet covering dose calculation algorithms, beam modeling,
-              validation, CT-density tables, IMRT/VMAT commissioning, and TPS QA.
-            </p>
-          </div>
+      <div class="library-panel">
+        <div class="guide-list">
+          <article class="guide-item">
+            <div class="guide-icon">TPS</div>
+            <div>
+              <div class="guide-title-row">
+                <h3>TPS Commissioning Study Guide</h3>
+                <span class="tag ready">Available</span>
+              </div>
+              <p>
+                Oral-exam style review covering dose calculation algorithms, beam modeling,
+                validation, CT-density tables, IMRT/VMAT commissioning, and TPS QA.
+              </p>
+            </div>
+            <div class="btn-row">
+              <a class="btn primary" href="TPS_study_guide.pdf" target="_blank" rel="noopener">Open PDF</a>
+              <a class="btn" href="TPS_study_guide.pdf" download>Download</a>
+            </div>
+          </article>
 
-          <div class="btn-row">
-            <a class="btn primary" href="TPS_study_guide.pdf" target="_blank" rel="noopener">Open PDF</a>
-            <a class="btn" href="TPS_study_guide.pdf" download>Download</a>
-          </div>
-        </article>
+          <article class="guide-item">
+            <div class="guide-icon">51</div>
+            <div>
+              <div class="guide-title-row">
+                <h3>TG-51 Reference Dosimetry</h3>
+                <span class="tag soon">Coming Soon</span>
+              </div>
+              <p>
+                Calibration setup, beam quality correction, chamber corrections, PDD/TMR concepts,
+                and common oral-board pitfalls.
+              </p>
+            </div>
+            <div class="btn-row">
+              <a class="btn disabled" href="#">Add PDF</a>
+            </div>
+          </article>
 
-        <article class="guide-card">
-          <div>
-            <span class="tag">Coming Soon</span>
-            <h3>TG-51 Study Guide</h3>
-            <p>
-              Add your TG-51 PDF to this folder, then update this card with the correct file name.
-            </p>
-          </div>
+          <article class="guide-item">
+            <div class="guide-icon">TM</div>
+            <div>
+              <div class="guide-title-row">
+                <h3>Treatment Machines</h3>
+                <span class="tag soon">Coming Soon</span>
+              </div>
+              <p>
+                Linac head components, MLCs, imaging systems, beam steering, QA tests,
+                safety systems, and machine troubleshooting.
+              </p>
+            </div>
+            <div class="btn-row">
+              <a class="btn disabled" href="#">Add PDF</a>
+            </div>
+          </article>
 
-          <div class="btn-row">
-            <a class="btn" href="#">Add PDF Link</a>
-          </div>
-        </article>
+          <article class="guide-item">
+            <div class="guide-icon">TP</div>
+            <div>
+              <div class="guide-title-row">
+                <h3>Treatment Planning</h3>
+                <span class="tag soon">Coming Soon</span>
+              </div>
+              <p>
+                Dose objectives, DVHs, normalization, plan evaluation, heterogeneity correction,
+                IMRT/VMAT concepts, and clinical planning checks.
+              </p>
+            </div>
+            <div class="btn-row">
+              <a class="btn disabled" href="#">Add PDF</a>
+            </div>
+          </article>
+        </div>
 
-        <article class="guide-card">
-          <div>
-            <span class="tag">Coming Soon</span>
-            <h3>Treatment Machines</h3>
-            <p>
-              Add your treatment machines PDF, treatment planning PDF, or ABR question packet here.
-            </p>
-          </div>
-
-          <div class="btn-row">
-            <a class="btn" href="#">Add PDF Link</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell">
-      <div class="note-card">
-        <h2>File Path Check</h2>
-        <p>
-          This page expects the PDF to be in the same folder as this file.
-        </p>
-        <p>
-          HTML page:
-          <code>study-guides/index.html</code>
-        </p>
-        <p>
-          PDF file:
-          <code>study-guides/TPS_study_guide.pdf</code>
-        </p>
-        <p>
-          Link used in this page:
-          <code>href="TPS_study_guide.pdf"</code>
-        </p>
+        <div class="library-footer">
+          Tip: when you upload another PDF into this folder, copy one guide item above and change only the title,
+          description, status tag, and PDF filename.
+        </div>
       </div>
     </section>
   </main>
