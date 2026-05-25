@@ -4,21 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medical Physics Hub</title>
+
   <style>
     :root {
       --bg: #06111f;
-      --nav: rgba(5, 15, 29, 0.88);
+      --nav: rgba(5, 15, 29, 0.86);
       --card: rgba(255, 255, 255, 0.075);
-      --card2: rgba(255, 255, 255, 0.12);
+      --card2: rgba(255, 255, 255, 0.13);
       --text: #eef7ff;
       --muted: #b7cce2;
-      --line: rgba(255, 255, 255, 0.145);
-      --blue: #38bdf8;
-      --blue2: #2563eb;
+      --muted2: #7f9ab6;
+      --line: rgba(255, 255, 255, 0.155);
       --cyan: #67e8f9;
+      --blue: #2563eb;
+      --green: #34d399;
       --purple: #a78bfa;
-      --shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
-      --radius: 24px;
+      --amber: #fbbf24;
+      --red: #fb7185;
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.44);
+      --radius: 28px;
     }
 
     * { box-sizing: border-box; }
@@ -29,17 +33,29 @@
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 8% 0%, rgba(56, 189, 248, 0.24), transparent 34%),
-        radial-gradient(circle at 88% 6%, rgba(37, 99, 235, 0.26), transparent 34%),
-        radial-gradient(circle at 48% 38%, rgba(167, 139, 250, 0.10), transparent 32%),
-        linear-gradient(180deg, var(--bg), #020816 72%);
+        radial-gradient(circle at 9% 0%, rgba(56, 189, 248, 0.28), transparent 34%),
+        radial-gradient(circle at 92% 4%, rgba(37, 99, 235, 0.28), transparent 34%),
+        radial-gradient(circle at 50% 42%, rgba(167, 139, 250, 0.10), transparent 34%),
+        linear-gradient(180deg, var(--bg), #020816 76%);
       min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, black, transparent 78%);
     }
 
     a { color: inherit; text-decoration: none; }
 
     .shell {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
     }
 
@@ -64,20 +80,20 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 850;
-      letter-spacing: -0.035em;
+      font-weight: 900;
+      letter-spacing: -0.04em;
     }
 
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, var(--cyan), var(--blue2));
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
       display: grid;
       place-items: center;
       color: #031126;
-      box-shadow: 0 12px 34px rgba(56, 189, 248, 0.27);
-      font-weight: 900;
+      box-shadow: 0 14px 38px rgba(56, 189, 248, 0.30);
+      font-weight: 950;
     }
 
     .nav-links {
@@ -98,127 +114,141 @@
 
     .nav-links a:hover {
       border-color: var(--line);
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.08);
       color: var(--text);
     }
 
-    .hero { padding: 76px 0 36px; }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .hero-card, .quick-card, .page-card {
-      background: linear-gradient(180deg, var(--card2), var(--card));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .hero {
+      padding: 76px 0 28px;
     }
 
     .hero-card {
-      padding: 44px;
       position: relative;
       overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(103, 232, 249, 0.12), transparent 34%),
+        linear-gradient(180deg, var(--card2), var(--card));
+      box-shadow: var(--shadow);
+      padding: 48px;
     }
 
     .hero-card::after {
       content: "";
       position: absolute;
-      right: -84px;
-      top: -86px;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.42), transparent 68%);
+      right: -110px;
+      top: -120px;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.44), transparent 70%);
       filter: blur(2px);
     }
 
     .eyebrow {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
       color: var(--cyan);
-      font-weight: 800;
-      font-size: 0.86rem;
+      font-weight: 850;
+      font-size: 0.84rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
     }
 
     h1 {
+      position: relative;
+      z-index: 1;
       margin: 18px 0 16px;
       max-width: 900px;
-      font-size: clamp(2.35rem, 6vw, 5.2rem);
-      line-height: 0.95;
-      letter-spacing: -0.078em;
+      font-size: clamp(2.6rem, 6vw, 5.25rem);
+      line-height: 0.94;
+      letter-spacing: -0.08em;
     }
 
     .lead {
-      max-width: 780px;
+      position: relative;
+      z-index: 1;
+      max-width: 790px;
       color: var(--muted);
-      font-size: 1.12rem;
+      font-size: 1.14rem;
       line-height: 1.65;
       margin: 0 0 28px;
     }
 
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
       padding: 12px 16px;
       border-radius: 999px;
-      font-weight: 800;
+      font-weight: 850;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.075);
-      transition: 0.2s ease;
+      transition: 0.22s ease;
+      white-space: nowrap;
     }
 
     .btn.primary {
-      background: linear-gradient(135deg, var(--cyan), var(--blue2));
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
       color: #031126;
       border-color: transparent;
+      box-shadow: 0 16px 36px rgba(56, 189, 248, 0.18);
     }
 
-    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
 
-    .quick-grid {
+    .stat-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      height: 100%;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 8px;
     }
 
-    .quick-card {
-      padding: 22px;
-      transition: 0.2s ease;
+    .stat-card {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(0, 0, 0, 0.16);
     }
 
-    .quick-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(103, 232, 249, 0.42);
-    }
-
-    .quick-card strong {
+    .stat-card strong {
       display: block;
-      font-size: 2rem;
-      letter-spacing: -0.055em;
-      color: var(--cyan);
-      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 1.35rem;
+      letter-spacing: -0.05em;
+      margin-bottom: 3px;
     }
 
-    .quick-card span {
+    .stat-card span {
       display: block;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       line-height: 1.35;
     }
 
-    section { padding: 34px 0; }
+    section {
+      padding: 28px 0 48px;
+    }
 
     .section-head {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       justify-content: space-between;
       gap: 18px;
       margin-bottom: 18px;
@@ -226,8 +256,8 @@
 
     h2 {
       margin: 0;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-      letter-spacing: -0.055em;
+      font-size: clamp(1.75rem, 3vw, 2.55rem);
+      letter-spacing: -0.06em;
     }
 
     .section-head p {
@@ -237,25 +267,92 @@
       line-height: 1.55;
     }
 
-    .page-grid {
+    .library-panel {
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--card2), var(--card));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-item {
+      position: relative;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: 76px 1fr auto;
+      gap: 22px;
+      align-items: center;
+      padding: 26px;
+      border-bottom: 1px solid var(--line);
+      transition: 0.24s ease;
     }
 
-    .page-card {
-      padding: 24px;
-      min-height: 250px;
-      transition: 0.2s ease;
+    .section-item:last-child { border-bottom: none; }
+
+    .section-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background:
+        radial-gradient(circle at 10% 50%, rgba(103, 232, 249, 0.18), transparent 26%),
+        linear-gradient(90deg, rgba(255,255,255,0.055), transparent 70%);
+      transition: 0.24s ease;
+    }
+
+    .section-item:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .section-item:hover::before { opacity: 1; }
+
+    .section-icon,
+    .section-copy,
+    .section-action {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 21px;
+      display: grid;
+      place-items: center;
+      color: #031126;
+      font-weight: 950;
+      letter-spacing: -0.055em;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      box-shadow: 0 16px 42px rgba(56, 189, 248, 0.24);
+    }
+
+    .section-title-row {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 7px;
     }
 
-    .page-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(103, 232, 249, 0.50);
-      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+    .section-number {
+      color: var(--muted2);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .section-item h3 {
+      margin: 0;
+      font-size: 1.34rem;
+      letter-spacing: -0.045em;
+    }
+
+    .section-item p {
+      color: var(--muted);
+      line-height: 1.56;
+      margin: 0;
+      max-width: 760px;
     }
 
     .tag {
@@ -263,52 +360,70 @@
       width: fit-content;
       padding: 6px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 850;
-      background: rgba(56, 189, 248, 0.14);
-      color: var(--cyan);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      border: 1px solid transparent;
+      white-space: nowrap;
     }
 
-    .page-card h3 {
-      margin: 16px 0 10px;
-      font-size: 1.42rem;
-      letter-spacing: -0.04em;
+    .tag.core {
+      background: rgba(52, 211, 153, 0.13);
+      color: var(--green);
+      border-color: rgba(52, 211, 153, 0.26);
     }
 
-    .page-card p {
-      color: var(--muted);
-      line-height: 1.58;
-      margin: 0 0 18px;
+    .tag.high {
+      background: rgba(167, 139, 250, 0.14);
+      color: var(--purple);
+      border-color: rgba(167, 139, 250, 0.28);
     }
 
-    .mini-list {
+    .tag.ref {
+      background: rgba(251, 191, 36, 0.11);
+      color: var(--amber);
+      border-color: rgba(251, 191, 36, 0.24);
+    }
+
+    .tag.profile {
+      background: rgba(251, 113, 133, 0.11);
+      color: var(--red);
+      border-color: rgba(251, 113, 133, 0.24);
+    }
+
+    .section-action {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 0.82rem;
+      justify-content: flex-end;
+      min-width: 130px;
     }
 
-    .mini-list span {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 6px 9px;
-      background: rgba(255, 255, 255, 0.04);
+    .footer-note {
+      padding: 18px 26px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
+      background: rgba(0, 0, 0, 0.16);
     }
 
     .footer {
-      padding: 44px 0 70px;
+      padding: 42px 0 70px;
       color: var(--muted);
       text-align: center;
     }
 
-    @media (max-width: 1000px) {
-      .hero-grid, .page-grid { grid-template-columns: 1fr; }
-      .section-head { align-items: stretch; flex-direction: column; }
-      .hero-card { padding: 28px; }
+    @media (max-width: 900px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-item { grid-template-columns: 1fr; gap: 16px; }
+      .section-action { justify-content: flex-start; }
+      .hero-card { padding: 32px; }
       .nav-inner { align-items: flex-start; flex-direction: column; }
       .nav-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .stat-grid { grid-template-columns: 1fr; }
+      .section-icon { width: 56px; height: 56px; }
+      .btn { width: 100%; }
+      .hero-card { padding: 26px; }
     }
   </style>
 </head>
@@ -331,26 +446,37 @@
 
   <main>
     <header class="hero shell">
-      <div class="hero-grid">
-        <div class="hero-card">
-          <span class="eyebrow">Clinical Medical Physics Portfolio</span>
-          <h1>Medical Physics Hub</h1>
-          <p class="lead">
-            A clean home base for radiation therapy physics, ABR prep, residency projects, study guides,
-            QA references, and uploaded PDF collections. Each top tab opens a separate page.
-          </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="abr/index.html">Open ABR Page</a>
-            <a class="btn" href="residency-project/index.html">Residency Project</a>
-            <a class="btn" href="study-guides/index.html">Study Guides</a>
-          </div>
+      <div class="hero-card">
+        <span class="eyebrow">Radiation Therapy Physics</span>
+        <h1>Medical Physics Hub</h1>
+        <p class="lead">
+          A premium command center for ABR preparation, residency projects, commissioning documentation,
+          study guides, QA tools, and clinical medical physics references.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="study-guides/index.html">Open Study Library</a>
+          <a class="btn" href="abr/index.html">ABR Prep</a>
+          <a class="btn" href="residency-project/index.html">Residency Portfolio</a>
         </div>
 
-        <div class="quick-grid">
-          <a class="quick-card" href="abr/index.html"><strong>ABR</strong><span>Part 1, Part 2, Part 3 PDFs and notes</span></a>
-          <a class="quick-card" href="residency-project/index.html"><strong>RP</strong><span>Residency projects, scripts, and reports</span></a>
-          <a class="quick-card" href="study-guides/index.html"><strong>SG</strong><span>Study guides, oral packets, and summaries</span></a>
-          <a class="quick-card" href="resources/index.html"><strong>QA</strong><span>Reference links, TG reports, and tools</span></a>
+        <div class="stat-grid" aria-label="Medical Physics Hub overview">
+          <div class="stat-card">
+            <strong>ABR</strong>
+            <span>Part 1, Part 2, and Part 3 organization</span>
+          </div>
+          <div class="stat-card">
+            <strong>QA</strong>
+            <span>Clinical checks, TG references, and workflows</span>
+          </div>
+          <div class="stat-card">
+            <strong>PDF</strong>
+            <span>Study guides, packets, and polished notes</span>
+          </div>
+          <div class="stat-card">
+            <strong>RP</strong>
+            <span>Projects, scripts, reports, and presentations</span>
+          </div>
         </div>
       </div>
     </header>
@@ -358,72 +484,131 @@
     <section class="shell">
       <div class="section-head">
         <div>
-          <h2>Main Pages</h2>
-          <p>Each card opens a clean section page for PDFs, notes, projects, references, and ABR material.</p>
+          <h2>Main Library</h2>
+          <p>
+            Clean list-style navigation for the major sections of the site. Each row opens a dedicated page.
+          </p>
         </div>
       </div>
 
-      <div class="page-grid">
-        <a class="page-card" href="abr/index.html">
-          <div>
-            <span class="tag">Exam Prep</span>
-            <h3>ABR</h3>
-            <p>Organize ABR Part 1, Part 2, and Part 3 materials, including practice PDFs, formula sheets, topic summaries, and oral-board notes.</p>
+      <div class="library-panel">
+        <article class="section-item">
+          <div class="section-icon">ABR</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">01</span>
+              <h3>ABR Examination Prep</h3>
+              <span class="tag core">Core Section</span>
+            </div>
+            <p>
+              Organize ABR Part 1, Part 2, and Part 3 materials including therapy physics,
+              oral exam packets, formulas, topic summaries, and high-yield review notes.
+            </p>
           </div>
-          <div class="mini-list"><span>ABR 1</span><span>ABR 2</span><span>ABR 3</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn primary" href="abr/index.html">Open Section</a>
+          </div>
+        </article>
 
-        <a class="page-card" href="residency-project/index.html">
-          <div>
-            <span class="tag">Portfolio</span>
-            <h3>Residency Project</h3>
-            <p>Upload project reports, commissioning summaries, posters, presentations, scripts, QA tools, and clinical documentation examples.</p>
+        <article class="section-item">
+          <div class="section-icon">RP</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">02</span>
+              <h3>Residency Project Portfolio</h3>
+              <span class="tag core">Core Section</span>
+            </div>
+            <p>
+              Store commissioning reports, validation studies, automation scripts, QA tools,
+              presentations, posters, and structured clinical documentation examples.
+            </p>
           </div>
-          <div class="mini-list"><span>Projects</span><span>Scripts</span><span>Reports</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn primary" href="residency-project/index.html">Open Section</a>
+          </div>
+        </article>
 
-        <a class="page-card" href="study-guides/index.html">
-          <div>
-            <span class="tag">Study Library</span>
-            <h3>Study Guides</h3>
-            <p>Upload polished study guides as PDFs: TPS commissioning, TG-51, TG-142, treatment machines, treatment planning, and shielding.</p>
+        <article class="section-item">
+          <div class="section-icon">SG</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">03</span>
+              <h3>Study Guide Library</h3>
+              <span class="tag high">High Yield</span>
+            </div>
+            <p>
+              Polished PDF study guides for TPS commissioning, TG-51, TG-142,
+              treatment machines, treatment planning, shielding, and clinical physics topics.
+            </p>
           </div>
-          <div class="mini-list"><span>PDFs</span><span>Notes</span><span>Packets</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn primary" href="study-guides/index.html">Open Section</a>
+          </div>
+        </article>
 
-        <a class="page-card" href="resources/index.html">
-          <div>
-            <span class="tag">References</span>
-            <h3>Resources</h3>
-            <p>Keep useful links, TG report references, calculators, templates, tables, equations, and external medical physics resources.</p>
+        <article class="section-item">
+          <div class="section-icon">QA</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">04</span>
+              <h3>Clinical Resources & References</h3>
+              <span class="tag ref">Reference</span>
+            </div>
+            <p>
+              Keep useful links, Task Group references, calculators, templates, tables,
+              equations, shielding references, and external medical physics resources.
+            </p>
           </div>
-          <div class="mini-list"><span>TG Reports</span><span>Links</span><span>Tables</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn primary" href="resources/index.html">Open Section</a>
+          </div>
+        </article>
 
-        <a class="page-card" href="abr/part-2/index.html">
-          <div>
-            <span class="tag">High Yield</span>
-            <h3>ABR Part 2</h3>
-            <p>A dedicated page for Part 2 therapy physics: treatment machines, TPS, brachytherapy, shielding, imaging, and radiobiology PDFs.</p>
+        <article class="section-item">
+          <div class="section-icon">P2</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">05</span>
+              <h3>ABR Part 2 Therapy Physics</h3>
+              <span class="tag high">High Yield</span>
+            </div>
+            <p>
+              Dedicated therapy physics material including treatment machines, TPS,
+              brachytherapy, shielding, imaging, radiobiology, and oral-board style PDFs.
+            </p>
           </div>
-          <div class="mini-list"><span>Therapy</span><span>QA</span><span>Orals</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn" href="abr/part-2/index.html">Open Page</a>
+          </div>
+        </article>
 
-        <a class="page-card" href="about/index.html">
-          <div>
-            <span class="tag">Profile</span>
-            <h3>About / CV</h3>
-            <p>Optional page for professional background, clinical interests, residency timeline, presentations, and selected work.</p>
+        <article class="section-item">
+          <div class="section-icon">CV</div>
+          <div class="section-copy">
+            <div class="section-title-row">
+              <span class="section-number">06</span>
+              <h3>About / CV</h3>
+              <span class="tag profile">Profile</span>
+            </div>
+            <p>
+              Optional professional page for clinical interests, residency timeline,
+              presentations, selected work, publications, and CV-style background.
+            </p>
           </div>
-          <div class="mini-list"><span>CV</span><span>Bio</span><span>Work</span></div>
-        </a>
+          <div class="section-action">
+            <a class="btn" href="about/index.html">Open Page</a>
+          </div>
+        </article>
+
+        <div class="footer-note">
+          Tip: use this page as the clean front door, then let each section page hold the detailed PDFs, notes, links, and project files.
+        </div>
       </div>
     </section>
-
   </main>
 
   <footer class="footer shell">
-    Medical Physics Hub • Radiation Therapy Physics • ABR Prep • Clinical QA
+    Medical Physics Hub • ABR Preparation • Clinical QA • Commissioning • Radiation Therapy Physics
   </footer>
 </body>
 </html>
